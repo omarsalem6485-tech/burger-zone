@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURGER KINGDOM | مملكة البرجر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* === إعدادات عامة === */
+        :root {
+            --primary-color: #ff0000; /* أحمر ناري */
+            --dark-bg: #111111;
+            --card-bg: #1a1a1a;
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: white; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* === Navbar === */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* === Hero Section (Home) === */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: radial-gradient(circle at center, #222, #000);
+            position: relative;
+        }
+
+        .hero-text {
+            max-width: 500px;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text span {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* صورة البرجر الـ 3D */
+        .hero-img {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-img img {
+            width: 500px;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* === Menu Section === */
+        .menu {
+            padding: 80px 10%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            position: relative;
+            transform-style: preserve-3d; /* أساسي للـ 3D */
+        }
+
+        .menu-card img {
+            width: 100%;
+            border-radius: 15px;
+            transform: translateZ(20px); /* تخرج من الكارت */
+        }
+
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            transform: translateZ(10px);
+        }
+
+        .price {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+            transform: translateZ(10px);
+        }
+
+        /* === Contact Section === */
+        .contact {
+            padding: 80px 10%;
+            background: #0a0a0a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .contact-info, .map-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-left: 20px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        iframe {
+            width: 100%;
+            height: 350px;
+            border-radius: 20px;
+            filter: invert(90%); /* يخلي الخريطة لونها غامق */
+        }
+
+        /* === Footer === */
+        footer {
+            background: black;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+            color: #777;
+        }
+
+        /* === Responsiveness === */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; }
+            .nav-links { margin-top: 15px; gap: 15px; font-size: 0.9rem; }
+            .hero { flex-direction: column-reverse; justify-content: center; text-align: center; }
+            .hero-img img { width: 300px; margin-bottom: 30px; }
+            .hero-text h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">BURGER <span style="color:white">KING</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#menu">المنيو</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-text" data-aos="fade-left">
+            <h1>أقوى <span>برجر</span><br>في مصر</h1>
+            <p>طعم هياخدك لعالم تاني. لحم بلدي صافي وصوصات معمولة بمزاج.</p>
+            <a href="#menu" class="btn">اطلب دلوقتي</a>
+        </div>
+        <div class="hero-img" data-aos="zoom-in" data-tilt>
+            <img src="https://w7.pngwing.com/pngs/339/55/png-transparent-hamburger-cheeseburger-veggie-burger-take-out-fast-food-burger-king-food-beef-recipe.png" alt="Big Tasty Burger">
+        </div>
+    </section>
+
+    <section class="menu" id="menu">
+        <h2 class="section-title" data-aos="fade-down">المنيو بتاعنا</h2>
+        
+        <div class="menu-grid">
+            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
+                <img src="https://w7.pngwing.com/pngs/201/77/png-transparent-hamburger-veggie-burger-take-out-fast-food-kebab-delicious-burger-food-beef-recipe-thumbnail.png" alt="Burger">
+                <h3>برجر الوحش (Double)</h3>
+                <span class="price">150 ج.م</span>
+                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
+            </div>
+            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
+                <img src="https://w7.pngwing.com/pngs/56/992/png-transparent-cheeseburger-veggie-burger-hamburger-bun-bacon-burger-king-food-cheese-recipe.png" alt="Burger">
+                <h3>تشيز لافـر</h3>
+                <span class="price">120 ج.م</span>
+                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
+            </div>
+            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
+                <img src="https://w7.pngwing.com/pngs/436/7/png-transparent-hamburger-slider-french-fries-fast-food-cheeseburger-burger-burger-food-recipe-cheeseburger-thumbnail.png" alt="Burger">
+                <h3>عرض الصحاب (3 ساندوتش)</h3>
+                <span class="price">300 ج.م</span>
+                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section class="contact" id="contact">
+        <div class="contact-info" data-aos="fade-right">
+            <h2 style="color: var(--primary-color); margin-bottom: 30px;">كلمنـا وهنجيلك</h2>
+            
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>01000000000</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>القاهرة، وسط البلد، شارع طلعت حرب</span>
+            </div>
+            
+            <a href="https://wa.me/201000000000" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp" style="margin-left: 10px; color:white"></i>
+                اطلب على واتساب
+            </a>
+        </div>
+
+        <div class="map-container" data-aos="fade-left">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.188696899999!2d31.2357!3d30.0444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAyJzM5LjgiTiAzMcKwMTQnMDguNSJF!5e0!3m2!1sen!2seg!4v1600000000000!5m2!1sen!2seg" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2024 Burger Kingdom</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // تفعيل الأنيميشن عند السكرول
+        AOS.init({
+            duration: 1000, // مدة الحركة
+            once: true // الحركة تحصل مرة واحدة
+        });
+
+        // تفعيل تأثير الـ 3D للكروت
+        VanillaTilt.init(document.querySelectorAll(".menu-card"), {
+            max: 25,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.5,
+        });
+        
+        // تفعيل تأثير الـ 3D لصورة الهيرو
+        VanillaTilt.init(document.querySelector(".hero-img img"), {
+            max: 15,
+            speed: 300,
+        });
+    </script>
+</body>
+</html>
