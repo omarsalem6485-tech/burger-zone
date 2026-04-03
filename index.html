@@ -3,345 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURGER KINGDOM | مملكة البرجر</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>برجر زون | Burger Zone</title>
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* === إعدادات عامة === */
-        :root {
-            --primary-color: #ff0000; /* أحمر ناري */
-            --dark-bg: #111111;
-            --card-bg: #1a1a1a;
-            --text-color: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        a { text-decoration: none; color: white; transition: 0.3s; }
-        ul { list-style: none; }
-
-        /* === Navbar === */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--primary-color);
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        /* === Hero Section (Home) === */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10%;
-            background: radial-gradient(circle at center, #222, #000);
-            position: relative;
-        }
-
-        .hero-text {
-            max-width: 500px;
-            z-index: 2;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-text span {
-            color: var(--primary-color);
-        }
-
-        .btn {
-            padding: 15px 40px;
-            background: var(--primary-color);
+            font-family: 'Cairo', sans-serif;
+            background-color: #050505;
             color: white;
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            display: inline-block;
-            margin-top: 20px;
+            overflow-x: hidden;
+            margin: 0;
         }
 
-        .btn:hover {
-            background: white;
-            color: var(--primary-color);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 4px;
+        }
+
+        /* Navbar Blur Effect */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        /* Cart Sidebar Animation */
+        #cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+        .cart-open {
+            transform: translateX(0) !important;
+        }
+        .cart-closed {
+            transform: translateX(-100%);
+        }
+
+        /* Typography */
+        .text-glow {
+            text-shadow: 0 0 30px rgba(220, 38, 38, 0.8);
+        }
+        
+        /* Neon Button */
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.6);
+        }
+        .btn-neon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(220, 38, 38, 1);
+        }
+
+        /* Menu Cards */
+        .menu-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-8px);
+            border-color: #dc2626;
+            box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.2);
+        }
+        .menu-card img {
+            transition: transform 0.5s ease;
+        }
+        .menu-card:hover img {
             transform: scale(1.1);
         }
 
-        /* صورة البرجر الـ 3D */
-        .hero-img {
+        /* Hero Background */
+        #home {
+            background: url('https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1965&auto=format&fit=crop') no-repeat center center/cover;
             position: relative;
+        }
+        #home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to left, rgba(0,0,0,0.1), #000000 90%);
             z-index: 1;
         }
 
-        .hero-img img {
-            width: 500px;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* === Menu Section === */
-        .menu {
-            padding: 80px 10%;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 50px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .menu-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid #333;
-            position: relative;
-            transform-style: preserve-3d; /* أساسي للـ 3D */
-        }
-
-        .menu-card img {
+        /* Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-radius: 15px;
-            transform: translateZ(20px); /* تخرج من الكارت */
-        }
-
-        .menu-card h3 {
-            font-size: 1.5rem;
-            margin: 15px 0;
-            transform: translateZ(10px);
-        }
-
-        .price {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            font-weight: bold;
-            display: block;
-            margin-bottom: 15px;
-            transform: translateZ(10px);
-        }
-
-        /* === Contact Section === */
-        .contact {
-            padding: 80px 10%;
-            background: #0a0a0a;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+            flex-direction: column;
             justify-content: center;
-        }
-
-        .contact-info, .map-container {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .contact-item {
-            display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-        }
-
-        .contact-item i {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-left: 20px;
-            width: 50px;
-            text-align: center;
-        }
-
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            background: #25D366;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        iframe {
-            width: 100%;
-            height: 350px;
-            border-radius: 20px;
-            filter: invert(90%); /* يخلي الخريطة لونها غامق */
-        }
-
-        /* === Footer === */
-        footer {
-            background: black;
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid #333;
-            color: #777;
-        }
-
-        /* === Responsiveness === */
-        @media (max-width: 768px) {
-            header { padding: 15px 20px; flex-direction: column; }
-            .nav-links { margin-top: 15px; gap: 15px; font-size: 0.9rem; }
-            .hero { flex-direction: column-reverse; justify-content: center; text-align: center; }
-            .hero-img img { width: 300px; margin-bottom: 30px; }
-            .hero-text h1 { font-size: 2.5rem; }
+            transition: opacity 0.8s ease;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <header>
-        <div class="logo">BURGER <span style="color:white">KING</span></div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#menu">المنيو</a></li>
-                <li><a href="#contact">تواصل معنا</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="w-20 h-20 border-4 border-red-900 border-t-red-600 rounded-full animate-spin"></div>
+        <div class="mt-6 font-black text-2xl text-white tracking-widest animate-pulse">BURGER<span class="text-red-600">ZONE</span></div>
+    </div>
 
-    <section class="hero" id="home">
-        <div class="hero-text" data-aos="fade-left">
-            <h1>أقوى <span>برجر</span><br>في مصر</h1>
-            <p>طعم هياخدك لعالم تاني. لحم بلدي صافي وصوصات معمولة بمزاج.</p>
-            <a href="#menu" class="btn">اطلب دلوقتي</a>
-        </div>
-        <div class="hero-img" data-aos="zoom-in" data-tilt>
-            <img src="https://w7.pngwing.com/pngs/339/55/png-transparent-hamburger-cheeseburger-veggie-burger-take-out-fast-food-burger-king-food-beef-recipe.png" alt="Big Tasty Burger">
-        </div>
-    </section>
-
-    <section class="menu" id="menu">
-        <h2 class="section-title" data-aos="fade-down">المنيو بتاعنا</h2>
-        
-        <div class="menu-grid">
-            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
-                <img src="https://w7.pngwing.com/pngs/201/77/png-transparent-hamburger-veggie-burger-take-out-fast-food-kebab-delicious-burger-food-beef-recipe-thumbnail.png" alt="Burger">
-                <h3>برجر الوحش (Double)</h3>
-                <span class="price">150 ج.م</span>
-                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
-            </div>
-            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
-                <img src="https://w7.pngwing.com/pngs/56/992/png-transparent-cheeseburger-veggie-burger-hamburger-bun-bacon-burger-king-food-cheese-recipe.png" alt="Burger">
-                <h3>تشيز لافـر</h3>
-                <span class="price">120 ج.م</span>
-                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
-            </div>
-            <div class="menu-card" data-tilt data-tilt-glare data-tilt-max="15">
-                <img src="https://w7.pngwing.com/pngs/436/7/png-transparent-hamburger-slider-french-fries-fast-food-cheeseburger-burger-burger-food-recipe-cheeseburger-thumbnail.png" alt="Burger">
-                <h3>عرض الصحاب (3 ساندوتش)</h3>
-                <span class="price">300 ج.م</span>
-                <a href="#contact" class="btn" style="padding: 10px 30px;">اطلب</a>
-            </div>
-        </div>
-    </section>
-
-    
-
-    <section class="contact" id="contact">
-        <div class="contact-info" data-aos="fade-right">
-            <h2 style="color: var(--primary-color); margin-bottom: 30px;">كلمنـا وهنجيلك</h2>
-            
-            <div class="contact-item">
-                <i class="fas fa-phone-alt"></i>
-                <span>01000000000</span>
-            </div>
-            <div class="contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>القاهرة، وسط البلد، شارع طلعت حرب</span>
-            </div>
-            
-            <a href="https://wa.me/201000000000" target="_blank" class="whatsapp-btn">
-                <i class="fab fa-whatsapp" style="margin-left: 10px; color:white"></i>
-                اطلب على واتساب
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 py-5" id="navbar">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <a href="#" class="text-3xl md:text-4xl font-black text-white tracking-wider uppercase flex items-center gap-2">
+                <i class="fas fa-hamburger text-red-600"></i>
+                BURGER<span class="text-red-600">ZONE</span>
             </a>
+            
+            <div class="hidden md:flex space-x-8 space-x-reverse items-center bg-black/80 px-8 py-3 rounded-full backdrop-blur-md border border-white/10">
+                <a href="#home" class="text-white hover:text-red-500 font-bold transition">الرئيسية</a>
+                <a href="#menu" class="text-white hover:text-red-500 font-bold transition">المنيو</a>
+                <a href="#sides" class="text-white hover:text-red-500 font-bold transition">المقبلات</a>
+                <a href="#contact" class="text-white hover:text-red-500 font-bold transition">المكان</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative bg-red-600 hover:bg-red-700 text-white p-3 md:px-6 rounded-full transition shadow-lg group flex items-center gap-2 font-bold">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="hidden md:inline">السلة</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-red-600 text-xs font-black w-6 h-6 flex items-center justify-center rounded-full border-2 border-red-600 hidden">0</span>
+                </button>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none bg-zinc-800 p-2 rounded-lg">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/90 z-40 hidden transition-opacity opacity-0 backdrop-blur-sm"></div>
+    <div id="cart-sidebar" class="fixed top-0 left-0 h-full w-full md:w-[450px] bg-zinc-950 border-r border-zinc-800 cart-closed shadow-2xl overflow-y-auto flex flex-col">
+        <div class="p-6 flex justify-between items-center border-b border-zinc-800 bg-zinc-950 sticky top-0 z-10">
+            <div>
+                <h2 class="text-2xl font-black text-white">طلباتك</h2>
+                <p class="text-sm text-gray-400">أكمل طلبك واستمتع</p>
+            </div>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-red-500 transition bg-zinc-900 w-10 h-10 rounded-full flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 p-6 space-y-4">
+            <!-- Items will be injected here -->
+            <div class="h-full flex flex-col items-center justify-center text-gray-600">
+                <i class="fas fa-hamburger text-6xl mb-4 opacity-20"></i>
+                <p>لسه ماخترتش أكل؟</p>
+            </div>
         </div>
 
-        <div class="map-container" data-aos="fade-left">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.188696899999!2d31.2357!3d30.0444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAyJzM5LjgiTiAzMcKwMTQnMDguNSJF!5e0!3m2!1sen!2seg!4v1600000000000!5m2!1sen!2seg" allowfullscreen="" loading="lazy"></iframe>
+        <div class="p-6 border-t border-zinc-800 bg-zinc-900 sticky bottom-0">
+            <div class="flex justify-between items-center mb-4 text-xl font-bold">
+                <span>المجموع:</span>
+                <span class="text-red-500 text-2xl"><span id="cart-total">0</span> ج.م</span>
+            </div>
+            <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-black text-lg transition flex items-center justify-center gap-3 shadow-lg hover:shadow-green-500/20 group">
+                <span>إرسال الطلب واتساب</span>
+                <i class="fab fa-whatsapp text-2xl group-hover:rotate-12 transition-transform"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center relative pt-20 overflow-hidden">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full relative z-10">
+            <div class="text-right order-2 lg:order-1 z-20 py-10">
+                <div class="inline-flex items-center gap-2 bg-red-600/10 text-red-500 border border-red-600/20 px-4 py-1.5 rounded-full font-bold text-sm mb-6 tracking-wide animate-pulse">
+                    <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                    مطعم البرجر رقم 1 في مصر
+                </div>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-6 leading-[0.9] text-glow">
+                    REAL<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900">TASTE</span>
+                </h1>
+                <p class="text-gray-300 text-lg md:text-2xl mb-10 leading-relaxed max-w-xl ml-auto lg:ml-0 font-light border-r-4 border-red-600 pr-6">
+                    مش مجرد ساندوتش، دي تجربة كاملة. لحم بلدي طازة، صوصات معمولة مخصوص ليك، وجبنة سايحة تغرقك سعادة.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#menu" class="bg-red-600 text-white px-10 py-4 rounded-full font-black text-xl btn-neon flex items-center gap-3 group">
+                        <span>اطلب أونلاين</span> <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2 h-[40vh] lg:h-auto pointer-events-none">
+                <!-- No 3D here, background image covers it -->
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce text-center opacity-50 z-20">
+            <i class="fas fa-chevron-down text-2xl"></i>
         </div>
     </section>
 
-    <footer>
-        <p>جميع الحقوق محفوظة &copy; 2024 Burger Kingdom</p>
+    <!-- BURGERS MENU -->
+    <section id="menu" class="py-24 bg-zinc-950 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-zinc-800 pb-6">
+                <div>
+                    <h2 class="text-5xl font-black text-white mb-2">وحوش <span class="text-red-600">البرجر</span></h2>
+                    <p class="text-gray-400 text-lg">كل واحد فيهم حكاية</p>
+                </div>
+                <div class="hidden md:block text-red-600 text-4xl">
+                    <i class="fas fa-fire"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="burger-grid">
+                <!-- JS will populate this -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SIDES & DRINKS MENU -->
+    <section id="sides" class="py-24 bg-black relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-zinc-800 pb-6">
+                <div>
+                    <h2 class="text-5xl font-black text-white mb-2">مقبلات <span class="text-yellow-500">&</span> مشروبات</h2>
+                    <p class="text-gray-400 text-lg">كّمل الأكلة باللي يظبطها</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="sides-grid">
+                <!-- JS will populate this -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-zinc-900 relative z-10 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-red-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="bg-black/50 backdrop-blur-lg border border-zinc-800 rounded-3xl p-8 md:p-12 flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/3 space-y-8">
+                    <div>
+                        <h3 class="text-3xl font-black text-white mb-2">زورنا في الفرع</h3>
+                        <p class="text-gray-400">أجواء شبابية ومزيكا وأحلى أكل</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+                        <div class="w-12 h-12 bg-red-600 text-white flex items-center justify-center rounded-full text-xl"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg">المعادي، شارع 9</h4>
+                            <p class="text-sm text-gray-400">أمام محطة المترو</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+                        <div class="w-12 h-12 bg-green-600 text-white flex items-center justify-center rounded-full text-xl"><i class="fab fa-whatsapp"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg">دليفري واتساب</h4>
+                            <p class="text-sm text-gray-400" dir="ltr">+20 109 053 8057</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-2/3 h-64 lg:h-auto bg-zinc-800 rounded-2xl overflow-hidden relative shadow-2xl">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.2357!3d30.0444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAyJzQwLjAiTiAzMcKwMTQnMDguNSJF!5e0!3m2!1sen!2seg!4v1600000000000!5m2!1sen!2seg" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        class="absolute inset-0 grayscale hover:grayscale-0 transition duration-500 opacity-80 hover:opacity-100">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 py-10 border-t border-zinc-900">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-black text-white mb-6 tracking-widest">BURGER<span class="text-red-600">ZONE</span></h3>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition duration-300"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p class="text-gray-600 text-sm">© 2025 BurgerZone Egypt. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <!-- Scripts -->
     <script>
-        // تفعيل الأنيميشن عند السكرول
-        AOS.init({
-            duration: 1000, // مدة الحركة
-            once: true // الحركة تحصل مرة واحدة
+        // --- LOADER ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
         });
 
-        // تفعيل تأثير الـ 3D للكروت
-        VanillaTilt.init(document.querySelectorAll(".menu-card"), {
-            max: 25,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.5,
-        });
-        
-        // تفعيل تأثير الـ 3D لصورة الهيرو
-        VanillaTilt.init(document.querySelector(".hero-img img"), {
-            max: 15,
-            speed: 300,
-        });
+        // --- MENU DATA ---
+        const burgers = [
+            { id: 1, name: "كلاسيك برجر", price: 85, desc: "قطعة لحم مشوي، جبنة شيدر، خس، طماطم، صوص زون.", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" },
+            { id: 2, name: "تشيز بومب", price: 110, desc: "غرقان جبنة سايحة، موزاريلا ستيكس، وهاليبينو.", img: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" },
+            { id: 3, name: "سموكد باربيكيو", price: 95, desc: "صوص باربيكيو مدخن، بيكون بقري، وحلقات بصل.", img: "https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?w=600&q=80" },
+            { id: 4, name: "مشروم سويس", price: 100, desc: "صوص مشروم كريمي مع جبنة سويسري بيضاء.", img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80" },
+            { id: 5, name: "تريبل بيست", price: 160, desc: "3 قطع لحم (450 جرام) للأكيلة التقيلة فقط.", img: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&q=80" },
+            { id: 6, name: "تشيكن رانش", price: 90, desc: "صدور فراخ مقرمشة، صوص رانش، وخس فريش.", img: "https://images.unsplash.com/photo-1615557960916-5f4791effe9d?w=800&q=80" },
+            { id: 7, name: "سبايسي فاير", price: 95, desc: "صوص حار جداً، فلفل حار، وجبنة بيبر جاك.", img: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=800&q=80" },
+            { id: 8, name: "بلو تشيز", price: 105, desc: "صوص ريكفورد (جبنة زرقاء) وجرجير وريحان.", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" }
+        ];
+
+        const sides = [
+            { id: 9, name: "بطاطس جبنة", price: 45, desc: "بطاطس مقرمشة عليها صوص شيدر سايح.", img: "https://images.unsplash.com/photo-1585109649139-3668018951a7?w=800&q=80" },
+            { id: 10, name: "موزاريلا ستيكس", price: 55, desc: "4 أصابع جبنة مقلية بتمط معاك.", img: "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=600&q=80" },
+            { id: 11, name: "حلقات بصل", price: 40, desc: "مقرمشة ودهبية.", img: "https://images.unsplash.com/photo-1639024471283-03518883512d?w=600&q=80" },
+            { id: 12, name: "أجنحة بافلو", price: 70, desc: "6 قطع أجنحة بصوص البافلو الحار.", img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600&q=80" },
+            { id: 13, name: "كولا كانز", price: 20, desc: "مشبرة.", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&q=80" },
+            { id: 14, name: "ميلك شيك", price: 50, desc: "فراولة، شوكولاتة، أو فانيليا.", img: "https://images.unsplash.com/photo-1579954115563-e72bf1381629?w=600&q=80" },
+            { id: 15, name: "مولتن كيك", price: 65, desc: "بركان شوكولاتة مع بولة آيس كريم.", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=80" }
+        ];
+
+        // --- Render Menu ---
+        function renderMenu() {
+            const burgerContainer = document.getElementById('burger-grid');
+            const sidesContainer = document.getElementById('sides-grid');
+
+            burgers.forEach(item => {
+                burgerContainer.innerHTML += `
+                    <div class="menu-card rounded-2xl overflow-hidden group flex flex-col h-full">
+                        <div class="h-60 overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10"></div>
+                            <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" loading="lazy">
+                            <div class="absolute bottom-4 right-4 z-20 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-red-600/40">الأكثر طلباً</div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-black text-white group-hover:text-red-500 transition">${item.name}</h3>
+                                <span class="text-xl font-black text-red-500">${item.price}</span>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-6 flex-1 leading-relaxed">${item.desc}</p>
+                            <button onclick="addToCart('${item.name}', ${item.price})" class="w-full bg-zinc-800 hover:bg-red-600 text-white py-3 rounded-xl font-bold transition flex justify-center items-center gap-2 group-hover:shadow-lg group-hover:shadow-red-900/20">
+                                <i class="fas fa-plus"></i> أضف للسلة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            sides.forEach(item => {
+                sidesContainer.innerHTML += `
+                    <div class="menu-card rounded-2xl overflow-hidden group flex flex-col">
+                        <div class="h-48 overflow-hidden relative">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10"></div>
+                            <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" loading="lazy">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-lg font-bold text-white">${item.name}</h3>
+                                <span class="text-lg font-black text-yellow-500">${item.price}</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-4 h-10">${item.desc}</p>
+                            <button onclick="addToCart('${item.name}', ${item.price})" class="w-full border border-zinc-700 hover:bg-white hover:text-black text-white py-2 rounded-lg font-bold transition text-sm">
+                                إضافة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        renderMenu();
+
+        // --- Cart Logic ---
+        let cart = [];
+        const phoneNumber = "201090538057";
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (sidebar.classList.contains('cart-closed')) {
+                sidebar.classList.remove('cart-closed');
+                sidebar.classList.add('cart-open');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                sidebar.classList.remove('cart-open');
+                sidebar.classList.add('cart-closed');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.find(i => i.name === name);
+            if(existing) existing.qty++;
+            else cart.push({ name, price, qty: 1 });
+            
+            updateCartUI();
+            const sidebar = document.getElementById('cart-sidebar');
+            if(sidebar.classList.contains('cart-closed')) toggleCart();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const countEl = document.getElementById('cart-count');
+            
+            let total = 0;
+            let count = 0;
+            
+            container.innerHTML = '';
+            
+            if(cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-gray-600">
+                        <i class="fas fa-hamburger text-6xl mb-4 opacity-20"></i>
+                        <p>لسه ماخترتش أكل؟</p>
+                    </div>`;
+                countEl.classList.add('hidden');
+            } else {
+                cart.forEach((item, idx) => {
+                    total += item.price * item.qty;
+                    count += item.qty;
+                    container.innerHTML += `
+                        <div class="flex justify-between items-center bg-zinc-900 p-4 rounded-xl border border-zinc-800 mb-3 animate-fade-in">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-white mb-1">${item.name}</h4>
+                                <div class="text-xs text-gray-400">${item.price} ج.م × ${item.qty}</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-red-500">${item.price * item.qty}</span>
+                                <div class="flex items-center gap-2 bg-black rounded-lg p-1">
+                                    <button onclick="changeQty(${idx}, -1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white">-</button>
+                                    <span class="text-sm w-4 text-center">${item.qty}</span>
+                                    <button onclick="changeQty(${idx}, 1)" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                countEl.innerText = count;
+                countEl.classList.remove('hidden');
+            }
+            totalEl.innerText = total;
+        }
+
+        function changeQty(idx, delta) {
+            cart[idx].qty += delta;
+            if(cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        function checkoutWhatsApp() {
+            if(cart.length === 0) return;
+            let msg = "👋 أهلاً BurgerZone، عايز أطلب:\n\n";
+            let total = 0;
+            cart.forEach(i => {
+                msg += `▪️ ${i.name} (x${i.qty}) = ${i.price * i.qty} ج.م\n`;
+                total += i.price * i.qty;
+            });
+            msg += `\n💰 *الإجمالي: ${total} ج.م*`;
+            msg += "\n📍 العنوان: ";
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
     </script>
 </body>
 </html>
